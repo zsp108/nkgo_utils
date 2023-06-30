@@ -22,8 +22,8 @@ func GetFileExt(f string) (fext string) {
 }
 
 // Check file or path exist
-func CheckExist(f string) (fexist bool) {
+func CheckNotExist(f string) (fexist bool) {
 	_, err := os.Stat(f)
-	fexist = os.IsExist(err)
+	fexist = os.IsNotExist(err)
 	return
 }
