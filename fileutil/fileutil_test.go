@@ -6,7 +6,17 @@ import (
 	"testing"
 )
 
-var fpathstr string = "./getfilesize_test.md"
+var (
+	fpath    string = "/tmp/file_test"
+	fpathstr string = "./getfilesize_test.md"
+)
+
+func TestMakeDirNotExist(t *testing.T) {
+	err := MakeDirNotExist(fpath)
+	if err != nil {
+		t.Errorf("t:%v", err)
+	}
+}
 
 func TestGetFileSize(t *testing.T) {
 
@@ -43,17 +53,23 @@ func TestGetFileExt(t *testing.T) {
 
 }
 
-func TestCheckNotExist(t *testing.T) {
+func TestCheckExist(t *testing.T) {
 	fpath1 := "./getfilesize_test"
 	fpath2 := "./getfilesize_test.md"
-	fexist1 := CheckNotExist(fpath1)
-	if !fexist1 {
+	fexist1 := CheckExist(fpath1)
+	if fexist1 {
 		t.Error(fexist1)
 	}
 
-	fexist2 := CheckNotExist(fpath2)
-	if fexist2 {
+	fexist2 := CheckExist(fpath2)
+	if !fexist2 {
 		t.Error(fexist2)
 	}
 
+}
+
+func TestCheckPermission(t *testing.T) {
+	if !CheckPermission(fpathstr) {
+		t.Errorf("is not permission %v", CheckPermission(fpathstr))
+	}
 }
